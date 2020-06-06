@@ -115,6 +115,7 @@ extern void mario_throw_held_object(struct MarioState *);
 extern void mario_stop_riding_and_holding(struct MarioState *);
 extern u32 does_mario_have_hat(struct MarioState *);
 extern void mario_blow_off_cap(struct MarioState *, f32);
+extern void mario_throw_cap(struct MarioState *);
 extern u32 mario_lose_cap_to_enemy(u32);
 extern void mario_retrieve_cap(void);
 extern struct Object *mario_get_collided_object(struct MarioState *, u32);

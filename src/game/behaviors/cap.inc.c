@@ -19,7 +19,6 @@ s32 cap_set_hitbox(void) {
         o->oInteractStatus = 0;
         return 1;
     }
-
     return 0;
 }
 
@@ -28,6 +27,13 @@ void cap_despawn(void) {
         obj_flicker_and_disappear(o, 300);
     }
 }
+
+void cap_despawn_trow(void) {
+    if (o->oTimer > 30) {
+        obj_flicker_and_disappear(o, 0.f);
+    }
+}
+
 
 void cap_check_quicksand(void) {
     if (sObjFloor == NULL)
@@ -189,11 +195,12 @@ void bhv_metal_cap_loop(void) {
 }
 
 void bhv_normal_cap_init(void) {
-    o->oGravity = 0.7f;
-    o->oFriction = 0.89f;
+    o->oGravity = 0.f;
+    o->oFriction = 0.999f;
     o->oBuoyancy = 0.9f;
     o->oOpacity = 0xFF;
 
+    o->oTimer = 0;
     save_file_set_cap_pos(o->oPosX, o->oPosY, o->oPosZ);
 }
 
@@ -219,6 +226,7 @@ void normal_cap_set_save_flags(void) {
     }
 }
 
+/*
 void normal_cap_act_0(void) {
     s16 sp1E;
 
@@ -238,8 +246,12 @@ void normal_cap_act_0(void) {
     if (o->oCapUnkF4 == 1)
         cap_scale_vertically();
 }
+*/
 
 void bhv_normal_cap_loop(void) {
+    cap_despawn_trow();
+    cur_obj_move_using_fvel_and_gravity();
+/*
     switch (o->oAction) {
         case 0:
             normal_cap_act_0();
@@ -250,19 +262,20 @@ void bhv_normal_cap_loop(void) {
             cap_sink_quicksand();
             break;
     }
-
+*/
     if ((s32) o->oForwardVel != 0)
         save_file_set_cap_pos(o->oPosX, o->oPosY, o->oPosZ);
 
-    if (o->activeFlags == 0)
-        normal_cap_set_save_flags();
+    //if (o->activeFlags == 0)
+       // normal_cap_set_save_flags();
 
-    if (cap_set_hitbox() == 1)
-        save_file_clear_flags(SAVE_FLAG_CAP_ON_GROUND);
+    cap_set_hitbox();
+        //save_file_clear_flags(SAVE_FLAG_CAP_ON_GROUND);
+
 }
 
 void bhv_vanish_cap_init(void) {
-    o->oGravity = 1.2f;
+    o->oGravity = 0.f;
     o->oFriction = 0.999f;
     o->oBuoyancy = 0.9f;
     o->oOpacity = 150;

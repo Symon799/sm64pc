@@ -83,7 +83,7 @@ s16 set_mario_animation(struct MarioState *m, s32 targetAnimID) {
         if (targetAnim->flags & ANIM_FLAG_2) {
             o->header.gfx.unk38.animFrame = targetAnim->unk04;
         } else {
-            if (targetAnim->flags & ANIM_FLAG_FORWARD) {
+            if (targetAnim->flags & ANIM_FLAG_FORWARD) { 
                 o->header.gfx.unk38.animFrame = targetAnim->unk04 + 1;
             } else {
                 o->header.gfx.unk38.animFrame = targetAnim->unk04 - 1;
@@ -862,10 +862,13 @@ static u32 set_mario_action_airborne(struct MarioState *m, u32 action, u32 actio
             break;
 
         case ACT_DIVE:
-            if ((fowardVel = m->forwardVel + 15.0f) > 48.0f) {
-                fowardVel = 48.0f;
-            }
+            //if ((fowardVel = m->forwardVel + 15.0f) > 48.0f) {
+            //    fowardVel = 48.0f;
+            //}
+            // Dive will always be 48
+            fowardVel = 48.0f;
             mario_set_forward_vel(m, fowardVel);
+            m->vel[1] = 20.0f;
             break;
 
         case ACT_LONG_JUMP:
@@ -1281,6 +1284,10 @@ void update_mario_button_inputs(struct MarioState *m) {
 
         if (m->controller->buttonPressed & Z_TRIG) {
             m->input |= INPUT_Z_PRESSED;
+        }
+
+        if (m->controller->buttonPressed & L_TRIG) {
+            m->input |= INPUT_L_PRESSED;
         }
     }
 

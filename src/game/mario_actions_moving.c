@@ -497,11 +497,13 @@ s32 check_ground_dive_or_punch(struct MarioState *m) {
 
     if (m->input & INPUT_B_PRESSED) {
         //! Speed kick (shoutouts to SimpleFlips)
+        /*
         if (m->forwardVel >= 29.0f && m->controller->stickMag > 48.0f) {
             m->vel[1] = 20.0f;
             return set_mario_action(m, ACT_DIVE, 1);
         }
-
+        */
+       mario_throw_cap(m);
         return set_mario_action(m, ACT_MOVE_PUNCHING, 0);
     }
 
@@ -852,6 +854,7 @@ s32 act_walking(struct MarioState *m) {
 }
 
 s32 act_move_punching(struct MarioState *m) {
+
     if (should_begin_sliding(m)) {
         return set_mario_action(m, ACT_BEGIN_SLIDING, 0);
     }

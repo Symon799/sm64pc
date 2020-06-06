@@ -343,6 +343,32 @@ u32 does_mario_have_hat(struct MarioState *m) {
     return (m->flags & MARIO_CAP_FLAGS) == (MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
 }
 
+void mario_throw_cap(struct MarioState *m){
+    struct Object *capObject;
+
+    if (does_mario_have_hat(m))
+    {
+        save_file_set_cap_pos(m->pos[0], m->pos[1], m->pos[2]);
+
+        m->flags &= ~(MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
+
+        //capObject = spawn_object(m->marioObj, MODEL_MARIOS_CAP, bhvNormalCap);
+        capObject = spawn_object_relative(1, 0, 120.f, 100.f, m->marioObj, MODEL_MARIOS_CAP, bhvNormalCap);
+        capObject->oForwardVel = 25.f;
+        capObject->oMoveAngleYaw = (s16)(m->faceAngle[1] + 0x400);
+
+        if (m->forwardVel < 0.0f) {
+            capObject->oMoveAngleYaw = (s16)(capObject->oMoveAngleYaw + 0x8000);
+        }
+
+    }
+    else
+    {
+
+    }
+    
+}
+
 void mario_blow_off_cap(struct MarioState *m, f32 capSpeed) {
     struct Object *capObject;
 

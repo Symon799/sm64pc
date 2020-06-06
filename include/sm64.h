@@ -65,6 +65,7 @@
 #define INPUT_B_PRESSED              0x2000
 #define INPUT_Z_DOWN                 0x4000
 #define INPUT_Z_PRESSED              0x8000
+#define INPUT_L_PRESSED              0x9000
 
 #define GROUND_STEP_LEFT_GROUND              0
 #define GROUND_STEP_NONE                     1
